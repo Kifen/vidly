@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
    const { error } = validate(req.body);
    if (error) return res.status(404).send(error.details[0].message);
 
-   let customer = Customer({
+   let customer = new Customer({
        name: req.body.name,
        isGold: req.body.isGold,
        phone: req.body.phone
@@ -36,7 +36,7 @@ router.put('/:id', async (req, res) => {
        name: req.body.name,
        isGold: req.body.isGold,
        phone: req.body.phone
-   }, {new: true})
+   }, {new: true});
 
     if (!customer) return res.status(404).send(`Customer with given id ${req.params.id} not found...`);
     res.send(customer);
