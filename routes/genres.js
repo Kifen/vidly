@@ -20,33 +20,33 @@ router.post('/', async (req, res) => {
     const found = await exist(req.body.name);
     if (found) return res.status(403).send(`Genre ${req.body.name} already exists...`);
 
-    let genre = new Genre({name: req.body.name});
-     genre = await genre.save()
+    const genre = new Genre({name: req.body.name});
+     await genre.save();
     res.status(201).send(genre)
 });
 
 router.put('/:id', async (req, res) => {
-    const { error } = validate(req.body)
+    const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     const found = await exist(req.body.name);
     if (!found) {
         const genre = await Genre.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true});
-        if (!genre) return res.status(404).send(`Genre with given id ${req.params.id} not found...`)
+        if (!genre) return res.status(404).send(`Genre with given id ${req.params.id} not found...`);
         res.send(genre);
     }
     return res.status(403).send(`Genre ${req.body.name} already exists...`);
 });
 
 router.delete('/:id', async (req, res) => {
-    const genre = await Genre.findByIdAndRemove(req.params.id)
-    if (!genre) return res.status(404).send(`Genre with id ${req.params.id} not found...`)
+    const genre = await Genre.findByIdAndRemove(req.params.id);
+    if (!genre) return res.status(404).send(`Genre with id ${req.params.id} not found...`);
     res.send(genre);
 });
 
 async function exist(name) {
     const genre = await Genre.find({name: name});
-    console.log(genre)
+    console.log(genre);
     if (genre.length === 0) return false;
 
     return true
