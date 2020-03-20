@@ -5,15 +5,13 @@ const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
    name: {type: String, minLength: 3, maxLenght: 25, required: true},
-   email: {
-       type: String,
-       unique: true,
-   },
-    password: {type: String, minLength: 8, required: true}
+   email: {type: String, unique: true},
+    password: {type: String, minLength: 8, required: true},
+    isAdmin: {type: Boolean, default: false, required: true}
 });
 
 userSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id}, config.get('jwtPrivateKey'));
+    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
     return token;
 };
 
