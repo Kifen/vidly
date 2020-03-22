@@ -9,13 +9,23 @@ var options = {
         json: true,
         maxsize: 5242880, // 5MB
         maxFiles: 5,
-        colorize: true,
+        prettyPrint: true,
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.simple()
+        ),
+        timeStamp: function () {
+            return (new Date()).toLocaleDateString();
+        }
     },
     console: {
         level: 'debug',
         handleExceptions: true,
         json: false,
-        colorize: true,
+        format: winston.format.combine(
+            winston.format.colorize(),
+            winston.format.simple()
+        )
     },
 };
 
@@ -25,6 +35,13 @@ var logger = winston.createLogger({
         new winston.transports.Console(options.console)
     ],
     exitOnError: false, // do not exit on handled exceptions
+});
+
+winston.addColors({
+    error: 'red',
+    warn: 'yellow',
+    info: 'cyan',
+    debug: 'green'
 });
 
 logger.stream = {
