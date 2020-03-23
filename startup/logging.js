@@ -1,4 +1,5 @@
 require('winston-mongodb');
+require('express-async-errors');
 const winston = require('winston');
 const appRoot = require('app-root-path');
 
@@ -11,6 +12,7 @@ var options = {
         maxsize: 5242880, // 5MB
         maxFiles: 5,
         prettyPrint: true,
+        colorize: true,
         format: winston.format.combine(
             winston.format.colorize(),
             winston.format.simple()
@@ -38,6 +40,7 @@ var options = {
         level: 'debug',
         handleExceptions: true,
         json: true,
+        colorize: true,
         format: winston.format.combine(
             winston.format.colorize(),
             winston.format.simple()
@@ -45,7 +48,7 @@ var options = {
     },
 };
 
-var logger = winston.createLogger({
+let logger = winston.createLogger({
     transports: [
         new winston.transports.File(options.file),
         new winston.transports.MongoDB(options.mongo),
@@ -66,5 +69,9 @@ logger.stream = {
         logger.info(message);
     },
 };
+
+process.on('unhandledRejection', (ex) => {
+    throw ex;
+});
 
 module.exports = logger;

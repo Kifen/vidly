@@ -1,4 +1,4 @@
-const winston = require('../config/winston');
+const winston = require('../startup/logging');
 
 module.exports= function (err, req, res, next) {
     // log the exception

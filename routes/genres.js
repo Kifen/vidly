@@ -5,7 +5,7 @@ const adminMiddleWare = require('../middleware/admin');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    throw new Error('Testing winston...')
+    throw new Error('Testing winston...');
     const genres = await Genre.find().sort('name');
     res.send(genres);
 });
