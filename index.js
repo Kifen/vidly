@@ -14,6 +14,10 @@ const Joi  = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const config = require('config');
 
+process.on('unhandledRejection', (ex) => {
+    throw ex;
+});
+
 if (!config.get('jwtPrivateKey')) {
     console.log('FATAL ERROR: jwtPrivateKey is not defined.');
     process.exit(1);

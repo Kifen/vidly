@@ -37,7 +37,7 @@ var options = {
     console: {
         level: 'debug',
         handleExceptions: true,
-        json: false,
+        json: true,
         format: winston.format.combine(
             winston.format.colorize(),
             winston.format.simple()
