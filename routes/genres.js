@@ -1,22 +1,22 @@
 const express = require('express');
 const {Genre, validate} = require('../models/genre');
-const authMiddleWare = require('../middleware/auth');
-const adminMiddleWare = require('../middleware/admin');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
+const validateObjectId = require('../middleware/validateObjectid');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    throw new Error('Testing winston...');
     const genres = await Genre.find().sort('name');
     res.send(genres);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
    const genre = await Genre.findById(req.params.id);
     if (!genre) return res.status(404).send(`Genre with given id ${req.params.id} not found...`)
     res.send(genre);
 });
 
-router.post('/', authMiddleWare, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -28,7 +28,7 @@ router.post('/', authMiddleWare, async (req, res) => {
     res.status(201).send(genre)
 });
 
-router.put('/:id', [authMiddleWare, adminMiddleWare], async (req, res) => {
+router.put('/:id', [auth, admin], async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -41,7 +41,7 @@ router.put('/:id', [authMiddleWare, adminMiddleWare], async (req, res) => {
     return res.status(403).send(`Genre ${req.body.name} already exists...`);
 });
 
-router.delete('/:id', [authMiddleWare, adminMiddleWare], async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
     if (!genre) return res.status(404).send(`Genre with id ${req.params.id} not found...`);
     res.send(genre);

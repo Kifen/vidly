@@ -1,5 +1,4 @@
 require('winston-mongodb');
-require('express-async-errors');
 const winston = require('winston');
 const appRoot = require('app-root-path');
 

@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 const winston = require('./logging');
+const config = require('config');
 
 module.exports = function () {
-    mongoose.connect('mongodb://localhost/vidly', {
+    const db = config.get('db');
+    mongoose.connect(db, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-    }).then(() => winston.info('MongoDB connected successfully.'))
+    }).then(() => winston.info(`Connected to ${db}...`))
 };
