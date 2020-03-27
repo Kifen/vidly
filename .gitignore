@@ -3,3 +3,4 @@ node_modules/
 logs
 
 jest.config.js
+jsconfig.json
