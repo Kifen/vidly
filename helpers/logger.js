@@ -53,7 +53,7 @@ let logger = winston.createLogger({
     new winston.transports.MongoDB(options.mongo),
     new winston.transports.Console(options.console)
   ],
-  exitOnError: false // do not exit on handled exceptions
+  exitOnError: true // do not exit on handled exceptions
 });
 
 winston.addColors({
