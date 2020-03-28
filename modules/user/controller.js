@@ -3,7 +3,7 @@ const _ = require("lodash");
 const { sendJSONResponse } = require("../../helpers");
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin } = req.body;
   const exists = await User.findOne({ email });
   if (exists)
     return sendJSONResponse(
@@ -14,7 +14,7 @@ const register = async (req, res) => {
       "Account with this email already exists!"
     );
 
-  const user = new User({ name, email });
+  const user = new User({ name, email, isAdmin });
   user.password = await user.setPassword(password);
   await user.save();
   const token = user.generateAuthToken();
@@ -64,7 +64,13 @@ const login = async (req, res) => {
   return sendJSONResponse(res, 200, data, req.method, "Login successfull!");
 };
 
+const getUsers = async (req, res) => {
+  const users = await User.find().sort("name");
+  return sendJSONResponse(res, 200, { users }, req.method, "Success");
+};
+
 module.exports = {
   login,
-  register
+  register,
+  getUsers
 };

@@ -12,7 +12,8 @@ const register = {
     password: Joi.string()
       .min(8)
       .max(20)
-      .required()
+      .required(),
+    isAdmin: Joi.boolean().required()
   }
 };
 
