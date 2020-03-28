@@ -1,7 +1,7 @@
-const Joi = require("joi");
-require("joi-objectid")(Joi);
 require("express-async-errors");
 require("./models/db")();
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
 const express = require("express");
 const app = express();
 const logger = require("./helpers/logger");

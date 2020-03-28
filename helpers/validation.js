@@ -14,7 +14,11 @@ const sendJSONResponse = (res, status, data, method, message) => {
 //const handleError = fn => (req, res, next) => fn(req, res, next).catch(next);
 const handleError = function(fn) {
   return function(req, res, next) {
-    fn(req, res, next).catch(next);
+    try {
+      fn(req, res, next);
+    } catch (ex) {
+      next(ex);
+    }
   };
 };
 
@@ -43,8 +47,8 @@ const validate = (schema, options) => {
       return next();
     }
     return Joi.validate(
-      dataToValidate.body,
-      schema.body,
+      dataToValidate,
+      schema,
       requestOptions,
       onValidationComplete
     );
