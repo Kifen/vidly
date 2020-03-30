@@ -24,8 +24,7 @@ const createGenre = async (req, res) => {
 };
 
 const getAll = async (req, res) => {
-  const genres = await Genre.find({});
-
+  const genres = await Genre.find();
   return sendJSONResponse(res, 200, { genres: genres }, req.method, "Success");
 };
 

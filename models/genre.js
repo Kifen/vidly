@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Joi = require("joi");
 
 const genreSchema = new mongoose.Schema({
   genre: {
@@ -12,4 +11,7 @@ const genreSchema = new mongoose.Schema({
 
 const Genre = mongoose.model("Genre", genreSchema);
 
-module.exports = Genre;
+module.exports = {
+  genreSchema,
+  Genre
+};

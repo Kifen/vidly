@@ -8,7 +8,9 @@ const userSchema = new mongoose.Schema({
   name: { type: String, minLength: 3, maxLenght: 25, required: true },
   email: { type: String, unique: true, trim: true },
   password: { type: String, minLength: 8, required: true },
-  isAdmin: { type: Boolean, default: false, required: true }
+  isAdmin: { type: Boolean, default: false, required: true },
+  phone: { type: String, max: 12, required: true },
+  isGold: { type: Boolean, default: false }
 });
 
 userSchema.index({
