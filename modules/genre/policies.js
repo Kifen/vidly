@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const _ = {
+const createPolicy = {
   body: {
     genre: Joi.string()
       .min(5)
@@ -9,4 +9,4 @@ const _ = {
   }
 };
 
-module.exports = _;
+module.exports = createPolicy;

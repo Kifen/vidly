@@ -46,6 +46,7 @@ const validate = (schema, options) => {
       Object.assign(req, validated);
       return next();
     }
+
     return Joi.validate(
       dataToValidate,
       schema,

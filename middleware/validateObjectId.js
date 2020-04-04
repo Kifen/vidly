@@ -15,12 +15,12 @@ module.exports = function(req, res, next) {
   // req.body.genreId && req.params.id
   //   ? (ObjectIds = [req.body.genreId, req.params.id])
   //   : (ObjectIds = [req.params.id || req.body.genreId]);
-  ObjectIds.forEach(id => {
+  for (let id of ObjectIds) {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error(`Invalid ID: <req.params.id = ${id}>`);
-      return sendJSONResponse(res, 404, null, req.method, "Invalid ID");
+      logger.error(`Invalid ID: <req.params.id = ${id}>`);
+      return sendJSONResponse(res, 404, null, req.method, "Invalid ID.");
     }
-  });
+  }
 
   return next();
 };

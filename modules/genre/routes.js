@@ -1,11 +1,11 @@
 const express = require("express");
 const controller = require("./controllers");
-const policy = require("./policies");
+const createPolicy = require("./policies");
 const { handleError, validate } = require("../../helpers");
 const { validateObjectId } = require("../../middleware");
 
 const router = express.Router();
-router.post("/", validate(policy._), handleError(controller.createGenre));
+router.post("/", validate(createPolicy), handleError(controller.createGenre));
 
 router.get("/", handleError(controller.getAll));
 
@@ -18,7 +18,7 @@ router.get(
 router.put(
   "/:id",
   handleError(validateObjectId),
-  validate(policy._),
+  validate(createPolicy),
   handleError(controller.updateGenre)
 );
 

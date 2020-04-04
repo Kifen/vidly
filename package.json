@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll --verbose"
+    "test": "./node_modules/.bin/mocha \"./test/**/*.spec.js\" --timeout 15000 --exit"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +30,13 @@
     "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "faker": "^4.1.0",
     "jest": "^25.1.0",
+    "mocha": "^7.1.1",
+    "mongodb-memory-server": "^6.5.1",
+    "sinon": "^9.0.1",
     "supertest": "^4.0.2"
   }
 }

@@ -1,11 +1,13 @@
 require("winston-mongodb");
 const winston = require("winston");
 const appRoot = require("app-root-path");
+const config = require("config");
 
 var options = {
   file: {
     level: "info",
     filename: `${appRoot}/logs/app.log`,
+    silent: `${config.get("logger")}`,
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB
@@ -22,7 +24,7 @@ var options = {
   },
   mongo: {
     level: "info",
-    silent: true,
+    silent: `${config.get("logger")}`,
     db: "mongodb://localhost/vidly",
     name: "winston_mongoDB",
     tryReconnect: true,
@@ -38,6 +40,7 @@ var options = {
   console: {
     level: "debug",
     handleExceptions: true,
+    silent: `${config.get("logger")}`,
     json: true,
     colorize: true,
     format: winston.format.combine(
