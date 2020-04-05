@@ -3,7 +3,7 @@ const chai = require("chai");
 const mongoose = require("mongoose");
 const chaiHttp = require("chai-http");
 const app = require("../../app");
-const dbHandler = require("../db-handler");
+const testHandler = require("../test_handler");
 
 const { expect } = chai;
 
@@ -12,20 +12,16 @@ chai.use(chaiHttp);
 describe("/api/genres", () => {
   const baseApi = "/api/genres";
   before(async () => {
-    await dbHandler.connect();
+    await testHandler.connect();
   });
 
   after(async () => {
-    await dbHandler.closeDatabase();
+    await testHandler.closeDatabase();
   });
 
   afterEach(async () => {
-    await dbHandler.clearDatabase();
+    await testHandler.clearDatabase();
   });
-
-  const getObjectId = id => {
-    return mongoose.Types.ObjectId(id);
-  };
 
   describe("GET /", () => {
     it("should return all genres", done => {
@@ -52,7 +48,9 @@ describe("/api/genres", () => {
         .end((err, res) => {
           expect(res.status).eql(200);
           expect(res.body.data.genre.genre).eql("genre1");
-          expect(getObjectId(res.body.data.genre._id)).eql(genre._id);
+          expect(testHandler.getObjectId(res.body.data.genre._id)).eql(
+            genre._id
+          );
           done();
         });
     });

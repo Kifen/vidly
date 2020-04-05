@@ -32,3 +32,7 @@ module.exports.clearDatabase = async () => {
     await collection.deleteOne();
   }
 };
+
+module.exports.getObjectId = id => {
+  return mongoose.Types.ObjectId(id);
+};
