@@ -15,7 +15,7 @@ const register = async (req, res) => {
     );
 
   const user = new User({ name, email, isAdmin, phone, isGold });
-  user.password = await user.setPassword(password);
+  await user.setPassword(password);
   await user.save();
   const token = user.generateAuthToken();
 
